@@ -41,10 +41,10 @@ contract MemorialWall {
      * @param _message the message to add
      * @param _name the name of the author
      */
-    function addMessage(string memory _message, string memory _name) public payable {
+    function addMemory(string memory _message, string memory _name) public payable {
 
         //check value
-        require(msg.value > 0 ether, "You must donate to add a message");
+        require(msg.value > 0 ether, "You must donate to add a memory to the wall");
 
         // add message to messages array
         messages.push(MemoryMessage(_message, _name, msg.sender, block.timestamp));
@@ -54,16 +54,33 @@ contract MemorialWall {
     }
 
     /**
+    * @dev Change ownership of the memorial wall
+    * @param _newOwner the address of the new owner
+    */
+    function changeOwner(address payable _newOwner) public {
+        require(msg.sender == owner, "Only the owner can change ownership");
+        owner = _newOwner;
+    }
+
+    /**
+     * @dev Return owner address 
+     * @return address of owner
+     */
+    function getOwner() external view returns (address) {
+        return owner;
+    }
+
+    /**
      * @dev get all the messages on the wall
      */
-    function getMessages() public view returns (MemoryMessage[] memory) {
+    function getMemories() public view returns (MemoryMessage[] memory) {
         return messages;
     }
 
     /**
      * @dev withdraw donations
      */
-    function withdraw() public {       
+    function withdrawDonations() public {       
         require(msg.sender == owner, "Only the owner can withdraw donations");
 
         (bool success, bytes memory data) = owner.call{value: address(this).balance}(new bytes(0));

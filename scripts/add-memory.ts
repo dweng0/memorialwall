@@ -34,6 +34,7 @@ async function printMemories(memories: NewMemoryMessageEventObject[]) {
 }
 
 async function main() {
+    console.log('here');
     const [deployer, user1, user2, user3] = await hre.ethers.getSigners();
     const deployerAddress = await deployer.getAddress();
     const deployerBalances = await getBalances(deployerAddress);
@@ -47,14 +48,23 @@ async function main() {
 
     console.log(`MemorialWall deployed to: ${memorialWall.address}`);
     //check balances before deployment
-    const addresses = [deployerAddress, user1.address];
+    const addresses = [deployerAddress, user1.address, memorialWall.address];
     
     console.log('===== starting =====')
     await logBalances(addresses)
 
+
+    const addMemoery = {value: hre.ethers.utils.parseEther("1"), gasPrice: hre.ethers.utils.parseUnits("20.0", "gwei")};
     // add a memory
     // const memory = {
     //     message: "This is a message",
     //     name: "John Doe",
     // }
 }
+
+main()
+.then(() => process.exit(0))
+.catch(error => {
+    console.error(error);
+    process.exit(1);
+})
