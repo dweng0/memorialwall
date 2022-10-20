@@ -10,7 +10,8 @@ contract MemorialWall {
     event NewMemoryMessage(
         address indexed author,
         string message,
-         string name,
+        string name,
+        string imageHash,
         uint256 timestamp
     );
 
@@ -21,6 +22,7 @@ contract MemorialWall {
     struct MemoryMessage {
         string message;
         string name;
+        string imageHash;
         address author;
         uint256 timestamp;
     }
@@ -41,16 +43,16 @@ contract MemorialWall {
      * @param _message the message to add
      * @param _name the name of the author
      */
-    function addMemory(string memory _message, string memory _name) public payable {
+    function addMemory(string memory _message, string memory _name, string memory _imageHash) public payable {
 
         //check value
         require(msg.value > 0 ether, "You must donate to add a memory to the wall");
 
         // add message to messages array
-        messages.push(MemoryMessage(_message, _name, msg.sender, block.timestamp));
+        messages.push(MemoryMessage(_message, _name, _imageHash, msg.sender, block.timestamp));
 
         // emit event
-        emit NewMemoryMessage(msg.sender, _message, _name, block.timestamp);
+        emit NewMemoryMessage(msg.sender, _message, _name, _imageHash, block.timestamp);
     }
 
     /**
