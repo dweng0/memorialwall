@@ -7,8 +7,8 @@ async function main() {
 
   const lockedAmount = ethers.utils.parseEther("1");
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  const MemorialWallContract = await ethers.getContractFactory("MemorialWallet");
+  const lock = await MemorialWallContract.deploy(unlockTime, { value: lockedAmount });
 
   await lock.deployed();
 
