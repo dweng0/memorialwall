@@ -13,6 +13,9 @@ contract MemorialWall {
          string name,
         uint256 timestamp
     );
+
+    // event to emit when we get a response on the withdrawal
+     event Response(bool success, bytes data);
       
     // Memo struct
     struct MemoryMessage {
@@ -65,6 +68,7 @@ contract MemorialWall {
 
         (bool success, bytes memory data) = owner.call{value: address(this).balance}(new bytes(0));
 
+        emit Response(success, data);
         // check the transfer was successful
         require(success, "Transfer failed.");
     }
