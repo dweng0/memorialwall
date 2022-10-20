@@ -1,7 +1,7 @@
 import { NewMemoryMessageEventObject} from '../typechain-types/MemorialWall';
+import * as hre from 'hardhat';
 
-const hre = require("hardhat");
-const getProvider = () => hre.waffle.provider;
+const getProvider = () => hre.ethers.provider;
 
 // return the balances for a given address
 async function getBalances(address: string) {
@@ -34,7 +34,7 @@ async function printMemories(memories: NewMemoryMessageEventObject[]) {
 }
 
 async function main() {
-    const [deployer] = await hre.ethers.getSigners();
+    const [deployer, user1, user2, user3] = await hre.ethers.getSigners();
     const deployerAddress = await deployer.getAddress();
     const deployerBalances = await getBalances(deployerAddress);
 
@@ -43,13 +43,18 @@ async function main() {
 
     const MemorialWall = await hre.ethers.getContractFactory("MemorialWall");
     const memorialWall = await MemorialWall.deploy();
-
     await memorialWall.deployed();
 
     console.log(`MemorialWall deployed to: ${memorialWall.address}`);
+    //check balances before deployment
+    const addresses = [deployerAddress, user1.address];
+    
+    console.log('===== starting =====')
+    await logBalances(addresses)
 
     // add a memory
-    const memory = {
-        message: "This is a message",
-        name: "John Doe",
+    // const memory = {
+    //     message: "This is a message",
+    //     name: "John Doe",
+    // }
 }
