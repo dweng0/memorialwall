@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-// Uncomment this line to use console.log
-// import "hardhat/console.sol";
-
+/**
+ * @title MemorialWall - A memorial wall for you to leave messages for your loved ones.
+ * @author @dweng0
+ */
 contract MemorialWall {
     // event to emit when a new message is added to the wall
     event NewMemoryMessage(
