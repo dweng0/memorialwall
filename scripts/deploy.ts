@@ -1,11 +1,11 @@
 import { ethers } from "hardhat";
+import * as hre from 'hardhat';
 
 async function main() {
 
 
-  const MemorialWallContract = await ethers.getContractFactory("MemorialWallet");
+  const MemorialWallContract = await hre.ethers.getContractFactory("MemorialWallet");
   const memwall = await MemorialWallContract.deploy();
-
   await memwall.deployed();
 
   console.log(`Mem wall deployed to ${memwall.address}`);
