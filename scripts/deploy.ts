@@ -4,7 +4,7 @@ async function main() {
 
 
   const MemorialWallContract = await ethers.getContractFactory("MemorialWallet");
-  const memwall = await MemorialWallContract.deploy(unlockTime, { value: lockedAmount });
+  const memwall = await MemorialWallContract.deploy();
 
   await memwall.deployed();
 
