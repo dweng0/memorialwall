@@ -4,7 +4,7 @@ import * as hre from 'hardhat';
 async function main() {
 
 
-  const MemorialWallContract = await hre.ethers.getContractFactory("MemorialWallet");
+  const MemorialWallContract = await hre.ethers.getContractFactory("MemorialWall");
   const memwall = await MemorialWallContract.deploy();
   await memwall.deployed();
 
