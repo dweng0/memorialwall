@@ -55,8 +55,33 @@ describe("MemorialWall", function () {
         expect(() => memorialWall.connect(owner).withdrawDonations());
     });
 
+    it('should prompt you to donate when adding to the wall', async () => {
+        await expect(
+            memorialWall.connect(userOne).addMemory('Hello World', 'jimmy', 'ipfs_image_hash', { value: 0 }))
+            .to
+            .be
+            .revertedWith('You must donate to add a memory to the wall');
+    });
+
     it('Should let you change owner if you are the owner', async () => {        
         await memorialWall.connect(owner).changeOwner(userOne.address);
         expect(await memorialWall.getOwner()).to.equal(userOne.address);
     });
+
+    it('Should not let you change owner if you are not the owner', async () => {
+        await expect(memorialWall.connect(userOne).changeOwner(userTwo.address)).to.be.revertedWith('Only the owner can change ownership');
+    });
+
+    it('Should return the owner address', async () => {
+        expect(await memorialWall.getOwner()).to.equal(owner.address);
+    });
+
+    it('Should fail if the you withdraw donations and you are not the owner', async () => {
+        await expect(memorialWall.connect(userOne).withdrawDonations()).to.be.revertedWith('Only the owner can withdraw donations');
+    });
+    
+    it('Should show the balance of the contract', async () => {
+        expect(await memorialWall.getDonationPot()).to.equal(0);
+    });
+
 });

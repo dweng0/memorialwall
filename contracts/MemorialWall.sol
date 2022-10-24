@@ -80,6 +80,13 @@ contract MemorialWall {
     }
 
     /**
+    * @dev view the funds for this memorial wall
+    */    
+    function getDonationPot() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    /**
      * @dev withdraw donations
      */
     function withdrawDonations() public {       
